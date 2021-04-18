@@ -1,7 +1,11 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
-/bin
-/obj
+
+[Dd]ebug/
+[Rr]elease/
+x64/
+[Bb]in
+[Oo]bj
 
 # compiled output
 /dist
