@@ -1,10 +1,18 @@
-<table class="table table-hover">
-    <tr *ngFor="let ed of service.list">        
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Last Name</th>
+        <th>Age</th>
+        <th>Sex</th>
+        <th>Birth Date</th>
+        <th>Delete</th>
+    </tr>
+    <tr *ngFor="let ed of service.list">
         <td (click)="populateForm(ed)">{{ed.Name}}</td>
         <td (click)="populateForm(ed)">{{ed.LastName}}</td>
         <td (click)="populateForm(ed)">{{ed.Age}}</td>
         <td (click)="populateForm(ed)">{{ed.Sex}}</td>
-        <td (click)="populateForm(ed)">{{ed.BirthDate}}</td>
+        <td (click)="populateForm(ed)">{{ed.BirthDate | date}}</td>
         <td>
             <i class="far fa-trash-alt fa-lg text-danger" (click)="onDelete(ed.ID)"></i>
         </td>
