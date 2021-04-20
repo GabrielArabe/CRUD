@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { EmployeeDetail, ESex} from 'src/app/shared/employee-detail.model';
+import { EmployeeDetail, ESex, sexName} from 'src/app/shared/employee-detail.model';
 import { EmployeeDetailService } from 'src/app/shared/employee-detail.service';
 
 
@@ -11,9 +11,9 @@ import { EmployeeDetailService } from 'src/app/shared/employee-detail.service';
   styles: []
 })
 export class EmployeeDetailListComponent implements OnInit {
- 
 
-
+  enumSexName = sexName;
+  
   constructor(private service: EmployeeDetailService,
     private toastr: ToastrService) { 
            

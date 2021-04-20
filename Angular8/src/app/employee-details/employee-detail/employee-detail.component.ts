@@ -42,7 +42,7 @@ export class EmployeeDetailComponent implements OnInit {
   }
 
   isEmptyOrSpaces(str: string){
-    return str === null || str.match(/^ *$/) !== null;
+    return !str || str.match(/^ *$/) !== null;
 }
 
   onSubmit(form:NgForm){

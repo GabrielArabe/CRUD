@@ -11,7 +11,7 @@
         <td (click)="populateForm(ed)">{{ed.Name}}</td>
         <td (click)="populateForm(ed)">{{ed.LastName}}</td>
         <td (click)="populateForm(ed)">{{ed.Age}}</td>
-        <td (click)="populateForm(ed)">{{ed.Sex}}</td>
+        <td (click)="populateForm(ed)">{{enumSexName[ed.Sex]}}</td>
         <td (click)="populateForm(ed)">{{ed.BirthDate | date}}</td>
         <td>
             <i class="far fa-trash-alt fa-lg text-danger" (click)="onDelete(ed.ID)"></i>
