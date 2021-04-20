@@ -7,8 +7,9 @@ namespace WebAPI.Models.Enum
 {
     public enum ESex
     {
-        male = 0,
-        female =1, 
+        undefined = 0,
+        male = 1,
+        female = 2, 
         notBinary = 3
     }
 }

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule} from '@angular/forms'
 import {HttpClientModule} from '@angular/common/http'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatSelectModule} from '@angular/material/select';
 
 import { ToastrModule } from 'ngx-toastr';
 
@@ -25,7 +26,8 @@ import { EmployeeDetailService } from './shared/employee-detail.service';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    MatSelectModule
   ],
   providers: [EmployeeDetailService],
   bootstrap: [AppComponent]

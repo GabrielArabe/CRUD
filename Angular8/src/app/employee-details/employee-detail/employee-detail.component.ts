@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { EmployeeDetailService } from 'src/app/shared/employee-detail.service';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { escapeRegExp } from '@angular/compiler/src/util';
+import { ESex, sexName } from 'src/app/shared/employee-detail.model';
 
 
 @Component({
@@ -11,8 +13,15 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class EmployeeDetailComponent implements OnInit {
 
+  public initialSex = null;
+  public sex = sexName;
+  enumKeys=[];
+
   constructor(private service: EmployeeDetailService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService) {
+      this.enumKeys = Object.keys(this.sex).filter(f => !isNaN(Number(f)));
+     }
+
 
   ngOnInit() {
     this.resetForm();
@@ -26,13 +35,48 @@ export class EmployeeDetailComponent implements OnInit {
       ID: 0,      
       Name: "",
       LastName: "",
-      Age: 0,
+      Age: null,
       Sex: 0,
       BirthDate: null
     }
   }
 
+  isEmptyOrSpaces(str: string){
+    return str === null || str.match(/^ *$/) !== null;
+}
+
   onSubmit(form:NgForm){
+    if(this.isEmptyOrSpaces(this.service.formData.Name)){
+      return this.toastr.error('Enter your name', 'Employee Detail Register');
+    }
+
+    if (this.isEmptyOrSpaces(this.service.formData.LastName))
+    {
+      return this.toastr.error("Enter your last name", 'Employee Detail Register');
+    }
+
+    if (this.service.formData.Age == 0 || this.service.formData.Age == null)
+    {
+      return this.toastr.error("Enter your age", 'Employee Detail Register');
+    } 
+    
+    if (this.service.formData.BirthDate == null)
+    {
+      return this.toastr.error("Enter your birthdate", 'Employee Detail Register');
+    }
+
+    if (this.service.formData.Name.length <= 3)
+    {
+      return this.toastr.error("Your name must be longer than 3 letters", 'Employee Detail Register');
+    }
+    if (this.service.formData.LastName.length <= 3)
+    {
+      return this.toastr.error("Your last name must be longer than 3 letters", 'Employee Detail Register');
+    }
+
+    if (this.service.formData.Sex==0){
+      return this.toastr.error('Select your sex', 'Employee Detail Register');
+    }
     if(this.service.formData.ID==0){
     this.insertRecord(form);
   }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { EmployeeDetail } from './employee-detail.model';
+import { EmployeeDetail, ESex } from './employee-detail.model';
 import {HttpClient} from "@angular/common/http"
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +11,15 @@ export class EmployeeDetailService {
   readonly rootUrl = 'http://localhost:29606/api';
   list: EmployeeDetail[];
 
-  constructor(private http:HttpClient) { }
+
+
+
+  constructor(private http:HttpClient) {
+    
+   }
 
   postEmployeeDetail(){
-  return this.http.post(this.rootUrl+'/EmployeeDetail', this.formData);
+    return this.http.post(this.rootUrl+'/EmployeeDetail', this.formData);
   }
 
   
@@ -30,6 +36,8 @@ export class EmployeeDetailService {
     .toPromise()
     .then(res => this.list = res as EmployeeDetail[]);
   }
+
+
 }
 
 

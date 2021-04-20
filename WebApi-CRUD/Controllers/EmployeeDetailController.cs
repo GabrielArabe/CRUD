@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Models;
+using WebAPI.Models.Enum;
 using WebApi_CRUD.Util;
 
 namespace WebApi_CRUD.Controllers
@@ -34,7 +35,7 @@ namespace WebApi_CRUD.Controllers
                 return new ResultModel() { Success = false, Message = "Enter your last name" };
             }
 
-            if (employee.Sex != WebAPI.Models.Enum.ESex.female && employee.Sex != WebAPI.Models.Enum.ESex.male && employee.Sex != WebAPI.Models.Enum.ESex.notBinary)
+            if (!Enum.IsDefined(typeof(ESex), employee.Sex))
             {
                 return new ResultModel() { Success = false, Message = "Enter your sex" };
             }
@@ -90,25 +91,23 @@ namespace WebApi_CRUD.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(employeeDetail).State = EntityState.Modified;
-
-            try
+            if (!EmployeeDetailExists(id))
             {
+                return NotFound();
+            }
+
+            var result = validate(employeeDetail);
+            if (result.Success)
+            {
+                _context.Entry(employeeDetail).State = EntityState.Modified;
+
                 await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EmployeeDetailExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+
+                return NoContent();
             }
 
-            return NoContent();
+            return BadRequest(result.Message);
+            
         }
 
         // POST: api/EmployeeDetail
@@ -123,9 +122,10 @@ namespace WebApi_CRUD.Controllers
                 await _context.SaveChangesAsync();
 
                 return CreatedAtAction("GetEmployeeDetail", new { id = employeeDetail.ID }, employeeDetail);
-            }
-            return BadRequest(result);
-           
+            }            
+            return BadRequest(result.Message);
+
+
         }
 
         // DELETE: api/EmployeeDetail/5
